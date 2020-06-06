@@ -56,7 +56,22 @@ switch($opcion){
         $resultado = $conexion->prepare($consulta);
         $resultado->execute();   
         $data=$resultado->fetchAll(PDO::FETCH_ASSOC);                        
-        break;        
+        break;   
+    case 4: 
+        $consulta = "UPDATE Entregas SET Fecha_Cliente='$Fecha_Cliente', Cod_Cliente='$Cod_Cliente',
+        Nombre_Cliente='$Nombre_Cliente', Direccion_Llegada='$Direccion_Llegada', Distrito='$Distrito',
+        Latitud='$Latitud' ,Longitud='$Longitud', Gui_Trans='$Gui_Trans',
+        Guia_Remi='$Guia_Remi' , Guia_Cliente='$Guia_Cliente' ,Estado='$Estado', Observaciones='$Observaciones' WHERE  Id='$Id' ";		
+       $resultado = $conexion->prepare($consulta);
+       $resultado->execute();        
+       
+       $consulta = "SELECT Id, Fecha_Cliente, Cod_Cliente, Nombre_Cliente, 
+       Direccion_Llegada, Distrito, Latitud, Longitud, Gui_Trans, Guia_Remi, 
+       Guia_Cliente, Estado, Observaciones FROM Entregas WHERE Id='$Id' ";       
+       $resultado = $conexion->prepare($consulta);
+       $resultado->execute();
+       $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
+       break;     
 }
 
 print json_encode($data, JSON_UNESCAPED_UNICODE); //enviar el array final en formato json a JS

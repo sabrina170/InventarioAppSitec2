@@ -22,8 +22,8 @@ DROP TABLE Entregas
 INSERT INTO `entregas`(`Id`, `Fecha_Cliente`, `Cod_Cliente`, `Nombre_Cliente`, 
 `Direccion_Llegada`, `Distrito`, `Latitud`, `Longitud`, `Gui_Trans`, `Guia_Remi`, 
 `Guia_Cliente`, `Estado`, `Observaciones`)
- VALUES (2,'2020-05-03',10901333,'Sabrina',
- 'Los Deportes','Chaclacayo',4.2251458,5.225478754,140,
+ VALUES (1,'2020-05-03',10901333,'Sabrina',
+ 'Los Deportes','Chaclacayo',-4.2251458,-5.225478754,140,
  150,452,'Entregado','Retraso de 30 min por trafico')
  
  SELECT * FROM Entregas

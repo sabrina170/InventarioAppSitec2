@@ -121,8 +121,18 @@ $conexion = $objeto->Conectar();
                 <input type="text" class="form-control" placeholder="Direccion" name="xdireccion"/>
             </div>
             <div class="col">
-                <input type="text" class="form-control" placeholder="Distrito" name="xdistrito"/>
-            </div>
+                                    <select name="xdistrito" id="" class="form-control">
+                                        <option value="">Distrito</option>
+                                        <?php
+                                            foreach($data as $dat)
+                                            {
+                                        ?>
+                                            <option value="<?php echo $dat['Distrito'] ?>"><?php echo $dat['Distrito'] ?></option>
+                                        <?php        
+                                            }
+                                        ?>
+                                    </select>
+                                    </div>
             </div>
             <br>
             <div class="form-row">
@@ -142,8 +152,18 @@ $conexion = $objeto->Conectar();
 				<input type="number" class="form-control" placeholder="Guia Cliente" name="xguiacliente"/>
             </div>
             <div class="col">
-                <input type="text" class="form-control" placeholder="Estado" name="xestado"/> 
-            </div>
+                                    <select name="xestado" id="" class="form-control">
+                                        <option value="">Estado</option>
+                                        <?php
+                                            foreach($data as $dat)
+                                            {
+                                        ?>
+                                            <option value="<?php echo $dat['Estado'] ?>"><?php echo $dat['Estado'] ?></option>
+                                        <?php        
+                                            }
+                                        ?>
+                                    </select> 
+                                    </div>
             </div>
             <br>
             <div class="form-row">
@@ -158,7 +178,7 @@ $conexion = $objeto->Conectar();
                 
               
     <div class="container2" style="margin:20px; border-bolor:green;">
-        <div class="row" style="margin:20px">
+        <div class="row" style="margin:10px">
         
             <!--<a class="btn btn-primary" href="index.php" role="button">Mostrar lista total</a>  --> 
        
@@ -173,6 +193,7 @@ $conexion = $objeto->Conectar();
                         <thead class="text-center">
                             <tr>
                                 
+                            
                                 <th>Id</th>
                                 <th>Fecha</th>
                                 <th>Código</th>
@@ -185,8 +206,8 @@ $conexion = $objeto->Conectar();
                                 <th>GR</th> 
                                 <th>GC</th>                                
                                 <th>Estado</th>
-                                <th>Obs.</th>    
-                                <th>Accion</th>                           
+                                <th>Obs.</th> 
+                                <th>Accionesdddd</th>                   
                             </tr>
                         </thead>
                         <tbody>
@@ -194,7 +215,7 @@ $conexion = $objeto->Conectar();
                             foreach($data as $dat) {                                                        
                             ?>
                             <tr>
-                               
+                            
                                 <td><?php echo $dat['Id'] ?></td>
                                 <td><?php echo $dat['Fecha_Cliente'] ?></td>
                                 <td><?php echo $dat['Cod_Cliente'] ?></td>
@@ -207,8 +228,9 @@ $conexion = $objeto->Conectar();
                                 <td><?php echo $dat['Guia_Remi'] ?></td>
                                 <td><?php echo $dat['Guia_Cliente'] ?></td>
                                 <td><?php echo $dat['Estado'] ?></td> 
-                                <td><?php echo $dat['Observaciones'] ?></td>  
-                                <td><div class='text-center'><div class='btn-group'><button class='btn btn-primary btnEditar'><i class='fa fa-edit'></i></button><button class='btn btn-danger btnBorrar'><i class='fa fa-trash'></i></button></div> </div>  </td>  
+                                <td><?php echo $dat['Observaciones'] ?></td>
+                                <td>
+                                </td>
                             </tr>
                             <?php
                                 }
@@ -303,7 +325,90 @@ $conexion = $objeto->Conectar();
         </form>    
         </div>
     </div>
-</div>  
+</div>
+<!-- Modal Detalles-->
+<div class="modal fade" id="modalVER" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        <form id="formPersonas">   
+        <fieldset disabled> 
+            <div class="modal-body">
+
+                <div class="form-row">
+                <div class="col">
+                <label for="nombre" class="col-form-label">Fecha:</label>
+                <input type="date" class="form-control" id="Fecha_Cliente2">
+                </div>
+                <div class="col">
+                <label for="pais" class="col-form-label">Codigo:</label>
+                <input type="number" class="form-control" id="Cod_Cliente2">
+                </div>
+                </div>
+
+                <div class="form-row">
+                <div class="col">
+                <label for="edad" class="col-form-label">Nombre:</label>
+                <input type="text" class="form-control" id="Nombre_Cliente2">
+                </div>   
+                <div class="col">
+                <label for="nombre" class="col-form-label">Distrito:</label>
+                <input type="text" class="form-control" id="Direccion_Llegada2">
+                </div>
+                </div>
+
+              
+                <div class="form-group">
+                <label for="pais" class="col-form-label">Direccion de Llegada:</label>
+                <input type="text" class="form-control" id="Distrito2">
+                </div>     
+
+                <div class="form-row">       
+                <div class="col">
+                <label for="edad" class="col-form-label" step='0.01' value='0.00' placeholder='0.00'>Latitud:</label>
+                <input type="float" class="form-control" id="Latitud2">
+                </div>  
+                <div class="col">
+                <label for="nombre" class="col-form-label" >Longitud:</label>
+                <input type="float" class="form-control" id="Longitud2">
+                </div>
+                </div>
+
+                <div class="form-row">  
+                <div class="col">
+                <label for="pais" class="col-form-label">Gria Transportista:</label>
+                <input type="number" class="form-control" id="Gui_Trans2">
+                </div>                
+                <div class="col">
+                <label for="edad" class="col-form-label">Guia Rem:</label>
+                <input type="number" class="form-control" id="Guia_Remi2">
+                </div>  
+                <div class="col">
+                <label for="edad" class="col-form-label">Guia Cliente:</label>
+                <input type="number" class="form-control" id="Guia_Cliente2">
+                </div>    
+                </div>
+
+
+                <div class="form-group">
+                <label for="edad" class="col-form-label">Estado:</label>
+                <input type="text" class="form-control" id="Estado2">
+                </div>  
+                <div class="form-group">
+                <label for="edad" class="col-form-label">Observaciones:</label>
+                <input type="text" class="form-control" id="Observaciones2">
+                </div>          
+            </div>
+            </fieldset>
+        </form>    
+        </div>
+    </div>
+</div>
+
       
     <!-- jQuery, Popper.js, Bootstrap JS -->
     <script src="jquery/jquery-3.3.1.min.js"></script>
