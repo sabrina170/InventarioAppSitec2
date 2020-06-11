@@ -2,7 +2,7 @@
 include_once 'bd/conexion.php';
 $objeto = new Conexion();
 $conexion = $objeto->Conectar();
-
+        //Busqueda
         $condition	=	'';
         if(isset($_REQUEST['xid']) and $_REQUEST['xid']!=""){
 			$condition	.=	' AND Id LIKE "%'.$_REQUEST['xid'].'%" ';
