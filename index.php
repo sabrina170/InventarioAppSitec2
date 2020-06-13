@@ -46,6 +46,13 @@ $conexion = $objeto->Conectar();
         $resultado->execute();
         $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
 
+        $consulta2="SELECT * from usuarios";
+        $resultado2 = $conexion->prepare($consulta2);
+        $resultado2->execute();
+        $data2=$resultado2->fetchAll(PDO::FETCH_ASSOC);
+
+       
+
 
         if(isset($_POST["export_data"])) {
             if(!empty($data)) {
@@ -68,6 +75,9 @@ $conexion = $objeto->Conectar();
             }
             exit;
         }
+
+
+        
 ?>
 
 <!doctype html>
@@ -77,7 +87,7 @@ $conexion = $objeto->Conectar();
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="shortcut icon" href="#" />  
-    <title>Inventario</title>
+    <title>Inventario 2</title>
       
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
@@ -192,22 +202,18 @@ $conexion = $objeto->Conectar();
                         <table id="tablaPersonas" class="table table-striped table-bordered table-condensed" style="width:100%">
                         <thead class="text-center">
                             <tr>
-                                
-                            
                                 <th>Id</th>
-                                <th>Fecha</th>
-                                <th>Código</th>
-                                <th>Nombre</th>           
-                                <th>Dirección</th>  
-                                <th>Distrito</th>   
-                                <th>Lat.</th>
-                                <th>Long.</th>
-                                <th>GT</th>                                
-                                <th>GR</th> 
-                                <th>GC</th>                                
-                                <th>Estado</th>
-                                <th>Obs.</th> 
-                                <th>Accionesdddd</th>                   
+                                <th>Codigo Cliente</th>                                
+                                <th>Direccion</th>
+                                <th>Distrito</th>  
+                                <th>Latitud</th>  
+                                <th>Longitud</th>  
+                                <th>Guia_trans</th>  
+                                <th>Guia_Remi</th>  
+                                <th>Guia_Cliente</th>
+                                <th>Estado</th>  
+                                <th>Observaciones</th>  
+                                <th>Acciones</th>                   
                             </tr>
                         </thead>
                         <tbody>
@@ -215,22 +221,18 @@ $conexion = $objeto->Conectar();
                             foreach($data as $dat) {                                                        
                             ?>
                             <tr>
-                            
-                                <td><?php echo $dat['Id'] ?></td>
-                                <td><?php echo $dat['Fecha_Cliente'] ?></td>
-                                <td><?php echo $dat['Cod_Cliente'] ?></td>
-                                <td><?php echo $dat['Nombre_Cliente'] ?></td>    
+                                <td><?php echo $dat['idEntrega'] ?></td>
+                                <td><?php echo $dat['Usuario_codigo'] ?></td>
                                 <td><?php echo $dat['Direccion_Llegada'] ?></td>
                                 <td><?php echo $dat['Distrito'] ?></td>
                                 <td><?php echo $dat['Latitud'] ?></td>
-                                <td><?php echo $dat['Longitud'] ?></td>  
-                                <td><?php echo $dat['Gui_Trans'] ?></td>
-                                <td><?php echo $dat['Guia_Remi'] ?></td>
+                                <td><?php echo $dat['Longitud'] ?></td>
+                                <td><?php echo $dat['Guia_Trans'] ?></td>
+                                <td><?php echo $dat['Guia_Remi'] ?></td>   
                                 <td><?php echo $dat['Guia_Cliente'] ?></td>
-                                <td><?php echo $dat['Estado'] ?></td> 
+                                <td><?php echo $dat['Estado'] ?></td>
                                 <td><?php echo $dat['Observaciones'] ?></td>
-                                <td>
-                                </td>
+                                <td></td>
                             </tr>
                             <?php
                                 }
@@ -242,8 +244,80 @@ $conexion = $objeto->Conectar();
         </div>  
     </div>    
       
-<!--Modal para CRUD-->
+      
+<!--Modal para Insertar-->
 <div class="modal fade" id="modalCRUD" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        <form id="formPersonas">    
+            <div class="modal-body">
+                <div class="form-group">
+                <label for="nombre" class="col-form-label">Codigo:</label>
+                <select name="codigo" id="Usuario_codigo" class="form-control">
+                                        <option value="">Codigo</option>
+                                        <?php
+                                            foreach($data2 as $dat)
+                                            {
+                                        ?>
+                                            <option value="<?php echo $dat['Codigo'] ?>"><?php echo $dat['Usuario'] ?></option>
+                                        <?php        
+                                            }
+                                        ?>
+                                    </select>
+                </div>
+                <div class="form-group">
+                <label for="pais" class="col-form-label">Direccion:</label>
+                <input type="text" class="form-control" id="Direccion_Llegada">
+                </div>                
+                <div class="form-group">
+                <label for="edad" class="col-form-label">Distrito:</label>
+                <input type="text" class="form-control" id="Distrito">
+                </div>   
+                <div class="form-group">
+                <label for="nombre" class="col-form-label">Latitud:</label>
+                <input type="float" class="form-control" id="Latitud">
+                </div>
+                <div class="form-group">
+                <label for="pais" class="col-form-label">Longitud:</label>
+                <input type="float" class="form-control" id="Longitud">
+                </div>                
+                <div class="form-group">
+                <label for="edad" class="col-form-label">Guia_Trans:</label>
+                <input type="number" class="form-control" id="Guia_Trans">
+                </div>
+                <div class="form-group">
+                <label for="nombre" class="col-form-label">Guia_Remi:</label>
+                <input type="number" class="form-control" id="Guia_Remi">
+                </div>
+                <div class="form-group">
+                <label for="pais" class="col-form-label">Guia_Cliente:</label>
+                <input type="number" class="form-control" id="Guia_Cliente">
+                </div>                
+                <div class="form-group">
+                <label for="edad" class="col-form-label">Estado:</label>
+                <input type="text" class="form-control" id="Estado">
+                </div>       
+                <div class="form-group">
+                <label for="edad" class="col-form-label">Observaciones:</label>
+                <input type="text" class="form-control" id="Observaciones">
+                </div>     
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
+                <button type="submit" id="btnGuardar" class="btn btn-dark">Guardar</button>
+            </div>
+        </form>    
+        </div>
+    </div>
+</div>  
+
+<!--Modal para Editar-->
+<!-- <div class="modal fade" id="modalCRUD" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -256,33 +330,23 @@ $conexion = $objeto->Conectar();
 
                 <div class="form-row">
                 <div class="col">
-                <label for="nombre" class="col-form-label">Fecha:</label>
-                <input type="date" class="form-control" id="Fecha_Cliente">
+                <label for="pais" class="col-form-label">Codigo: </label>
+                <Select id="Cod_Cliente" for="pais" class="form-control" >
+                <option value="">Codigo</option>
+                </Select>
                 </div>
                 <div class="col">
-                <label for="pais" class="col-form-label">Codigo:</label>
-                <input type="number" class="form-control" id="Cod_Cliente">
+                <label for="pais" class="col-form-label">Direccion de Llegada:</label>
+                <input type="text" class="form-control" id="Direccion_Llegada">
+                </div> 
                 </div>
-                </div>
-
-                <div class="form-row">
-                <div class="col">
-                <label for="edad" class="col-form-label">Nombre:</label>
-                <input type="text" class="form-control" id="Nombre_Cliente">
-                </div>   
+  
+            
+                <div class="form-row">  
                 <div class="col">
                 <label for="nombre" class="col-form-label">Distrito:</label>
-                <input type="text" class="form-control" id="Direccion_Llegada">
-                </div>
-                </div>
-
-              
-                <div class="form-group">
-                <label for="pais" class="col-form-label">Direccion de Llegada:</label>
                 <input type="text" class="form-control" id="Distrito">
                 </div>     
-
-                <div class="form-row">       
                 <div class="col">
                 <label for="edad" class="col-form-label" step='0.01' value='0.00' placeholder='0.00'>Latitud:</label>
                 <input type="float" class="form-control" id="Latitud">
@@ -325,7 +389,8 @@ $conexion = $objeto->Conectar();
         </form>    
         </div>
     </div>
-</div>
+</div>  -->
+
 <!-- Modal Detalles-->
 <div class="modal fade" id="modalVER" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -335,73 +400,49 @@ $conexion = $objeto->Conectar();
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
                 </button>
             </div>
-        <form id="formPersonas">   
+        <form id="form">   
         <fieldset disabled> 
-            <div class="modal-body">
-
-                <div class="form-row">
-                <div class="col">
-                <label for="nombre" class="col-form-label">Fecha:</label>
-                <input type="date" class="form-control" id="Fecha_Cliente2">
-                </div>
-                <div class="col">
-                <label for="pais" class="col-form-label">Codigo:</label>
-                <input type="number" class="form-control" id="Cod_Cliente2">
-                </div>
-                </div>
-
-                <div class="form-row">
-                <div class="col">
-                <label for="edad" class="col-form-label">Nombre:</label>
-                <input type="text" class="form-control" id="Nombre_Cliente2">
-                </div>   
-                <div class="col">
-                <label for="nombre" class="col-form-label">Distrito:</label>
-                <input type="text" class="form-control" id="Direccion_Llegada2">
-                </div>
-                </div>
-
-              
+        <div class="modal-body">
                 <div class="form-group">
-                <label for="pais" class="col-form-label">Direccion de Llegada:</label>
-                <input type="text" class="form-control" id="Distrito2">
-                </div>     
-
-                <div class="form-row">       
-                <div class="col">
-                <label for="edad" class="col-form-label" step='0.01' value='0.00' placeholder='0.00'>Latitud:</label>
-                <input type="float" class="form-control" id="Latitud2">
-                </div>  
-                <div class="col">
-                <label for="nombre" class="col-form-label" >Longitud:</label>
-                <input type="float" class="form-control" id="Longitud2">
+                <label for="nombre" class="col-form-label">Codigo:</label>
+                <input type="number" class="form-control" id="Usuario_codigo2">
                 </div>
-                </div>
-
-                <div class="form-row">  
-                <div class="col">
-                <label for="pais" class="col-form-label">Gria Transportista:</label>
-                <input type="number" class="form-control" id="Gui_Trans2">
+                <div class="form-group">
+                <label for="pais" class="col-form-label">Direccion:</label>
+                <input type="text" class="form-control" id="Direccion_Llegada2">
                 </div>                
-                <div class="col">
-                <label for="edad" class="col-form-label">Guia Rem:</label>
-                <input type="number" class="form-control" id="Guia_Remi2">
-                </div>  
-                <div class="col">
-                <label for="edad" class="col-form-label">Guia Cliente:</label>
-                <input type="number" class="form-control" id="Guia_Cliente2">
-                </div>    
+                <div class="form-group">
+                <label for="edad" class="col-form-label">Distrito:</label>
+                <input type="text" class="form-control" id="Distrito2">
+                </div>   
+                <div class="form-group">
+                <label for="nombre" class="col-form-label">Latitud:</label>
+                <input type="float" class="form-control" id="Latitud2">
                 </div>
-
-
+                <div class="form-group">
+                <label for="pais" class="col-form-label">Longitud:</label>
+                <input type="float" class="form-control" id="Longitud2">
+                </div>                
+                <div class="form-group">
+                <label for="edad" class="col-form-label">Guia_Trans:</label>
+                <input type="number" class="form-control" id="Guia_Trans2">
+                </div>
+                <div class="form-group">
+                <label for="nombre" class="col-form-label">Guia_Remi:</label>
+                <input type="number" class="form-control" id="Guia_Remi2">
+                </div>
+                <div class="form-group">
+                <label for="pais" class="col-form-label">Guia_Cliente:</label>
+                <input type="number" class="form-control" id="Guia_Cliente2">
+                </div>                
                 <div class="form-group">
                 <label for="edad" class="col-form-label">Estado:</label>
                 <input type="text" class="form-control" id="Estado2">
-                </div>  
+                </div>       
                 <div class="form-group">
                 <label for="edad" class="col-form-label">Observaciones:</label>
                 <input type="text" class="form-control" id="Observaciones2">
-                </div>          
+                </div>     
             </div>
             </fieldset>
         </form>    

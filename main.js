@@ -34,7 +34,7 @@ $("#btnNuevo").click(function(){
     $(".modal-header").css("color", "white");
     $(".modal-title").text("Nuevo registro");            
     $("#modalCRUD").modal("show");        
-    Id=null;
+    idEntrega=null;
     opcion = 1; //alta
    
 
@@ -45,29 +45,25 @@ var fila; //capturar la fila para editar o borrar el registro
 //botón EDITAR    
 $(document).on("click", ".btnEditar", function(){
     fila = $(this).closest("tr");
-    Id = parseInt(fila.find('td:eq(0)').text());
-    Fecha_Cliente = fila.find('td:eq(1)').text();
-    Cod_Cliente = parseInt(fila.find('td:eq(2)').text());
-    Nombre_Cliente= fila.find('td:eq(3)').text();
-    Direccion_Llegada = fila.find('td:eq(4)').text();
-    Distrito = fila.find('td:eq(5)').text();
-    Latitud = parseInt(fila.find('td:eq(6)').text());
-    Longitud = parseInt(fila.find('td:eq(7)').text());
-    Gui_Trans = parseInt(fila.find('td:eq(8)').text());
-    Guia_Remi = parseInt(fila.find('td:eq(9)').text());
-    Guia_Cliente = parseInt(fila.find('td:eq(10)').text());
-    Estado = fila.find('td:eq(11)').text();
-    Observaciones = fila.find('td:eq(12)').text();
+    idEntrega = parseInt(fila.find('td:eq(0)').text());
+    Usuario_codigo = parseInt(fila.find('td:eq(1)').text());
+    Direccion_Llegada = fila.find('td:eq(2)').text();
+    Distrito = fila.find('td:eq(3)').text();
+    Latitud = parseFloat(fila.find('td:eq(4)').text());
+    Longitud = parseFloat(fila.find('td:eq(5)').text());
+    Guia_Trans = parseInt(fila.find('td:eq(6)').text());
+    Guia_Remi = parseInt(fila.find('td:eq(7)').text());
+    Guia_Cliente = parseInt(fila.find('td:eq(8)').text());
+    Estado = fila.find('td:eq(9)').text();
+    Observaciones = fila.find('td:eq(10)').text();
     
     
-    $("#Fecha_Cliente").val(Fecha_Cliente);
-    $("#Cod_Cliente").val(Cod_Cliente);
-    $("#Nombre_Cliente").val(Nombre_Cliente);
+    $("#Usuario_codigo").val(Usuario_codigo);
     $("#Direccion_Llegada").val(Direccion_Llegada);
     $("#Distrito").val(Distrito);
     $("#Latitud").val(Latitud);
     $("#Longitud").val(Longitud);
-    $("#Gui_Trans").val(Gui_Trans);
+    $("#Guia_Trans").val(Guia_Trans);
     $("#Guia_Remi").val(Guia_Remi);
     $("#Guia_Cliente").val(Guia_Cliente);
     $("#Estado").val(Estado);
@@ -84,29 +80,25 @@ $(document).on("click", ".btnEditar", function(){
 
 $(document).on("click", ".btnVer", function(){
     fila = $(this).closest("tr");
-    Id = parseInt(fila.find('td:eq(0)').text());
-    Fecha_Cliente = fila.find('td:eq(1)').text();
-    Cod_Cliente = parseInt(fila.find('td:eq(2)').text());
-    Nombre_Cliente= fila.find('td:eq(3)').text();
-    Direccion_Llegada = fila.find('td:eq(4)').text();
-    Distrito = fila.find('td:eq(5)').text();
-    Latitud = parseInt(fila.find('td:eq(6)').text());
-    Longitud = parseInt(fila.find('td:eq(7)').text());
-    Gui_Trans = parseInt(fila.find('td:eq(8)').text());
-    Guia_Remi = parseInt(fila.find('td:eq(9)').text());
-    Guia_Cliente = parseInt(fila.find('td:eq(10)').text());
-    Estado = fila.find('td:eq(11)').text();
-    Observaciones = fila.find('td:eq(12)').text();
+    idEntrega = parseInt(fila.find('td:eq(0)').text());
+    Usuario_codigo = parseInt(fila.find('td:eq(1)').text());
+    Direccion_Llegada = fila.find('td:eq(2)').text();
+    Distrito = fila.find('td:eq(3)').text();
+    Latitud = parseFloat(fila.find('td:eq(4)').text());
+    Longitud = parseFloat(fila.find('td:eq(5)').text());
+    Guia_Trans = parseInt(fila.find('td:eq(6)').text());
+    Guia_Remi = parseInt(fila.find('td:eq(7)').text());
+    Guia_Cliente = parseInt(fila.find('td:eq(8)').text());
+    Estado = fila.find('td:eq(9)').text();
+    Observaciones = fila.find('td:eq(10)').text();
     
     
-    $("#Fecha_Cliente2").val(Fecha_Cliente);
-    $("#Cod_Cliente2").val(Cod_Cliente);
-    $("#Nombre_Cliente2").val(Nombre_Cliente);
+    $("#Usuario_codigo2").val(Usuario_codigo);
     $("#Direccion_Llegada2").val(Direccion_Llegada);
     $("#Distrito2").val(Distrito);
     $("#Latitud2").val(Latitud);
     $("#Longitud2").val(Longitud);
-    $("#Gui_Trans2").val(Gui_Trans);
+    $("#Guia_Trans2").val(Guia_Trans);
     $("#Guia_Remi2").val(Guia_Remi);
     $("#Guia_Cliente2").val(Guia_Cliente);
     $("#Estado2").val(Estado);
@@ -124,69 +116,66 @@ $(document).on("click", ".btnVer", function(){
 //botón BORRAR
 $(document).on("click", ".btnBorrar", function(){    
     fila = $(this);
-    Id = parseInt($(this).closest("tr").find('td:eq(0)').text());
+    idEntrega = parseInt($(this).closest("tr").find('td:eq(0)').text());
     opcion = 3 //borrar
-    var respuesta = confirm("¿Está seguro de eliminar el registro: "+Id+"?");
+    var respuesta = confirm("¿Está seguro de eliminar el registro: "+idEntrega+"?");
     if(respuesta){
         $.ajax({
             url: "bd/crud.php",
             type: "POST",
             dataType: "json",
-            data: {opcion:opcion, Id:Id},
+            data: {opcion:opcion, idEntrega:idEntrega},
             success: function(){
                 tablaPersonas.row(fila.parents('tr')).remove().draw();
             }
         });
-    }
+    }   
     header("location:index.php");
-
 });
     
 $("#formPersonas").submit(function(e){
     e.preventDefault();    
-    Fecha_Cliente = $.trim($("#Fecha_Cliente").val());
-    Cod_Cliente = $.trim($("#Cod_Cliente").val());
-    Nombre_Cliente = $.trim($("#Nombre_Cliente").val());    
+    Usuario_codigo = $.trim($("#Usuario_codigo").val());
     Direccion_Llegada = $.trim($("#Direccion_Llegada").val());
-    Distrito = $.trim($("#Distrito").val());
-    Latitud = $.trim($("#Latitud").val()); 
-    Longitud = $.trim($("#Longitud").val());
-    Gui_Trans = $.trim($("#Gui_Trans").val());
-    Guia_Remi = $.trim($("#Guia_Remi").val()); 
-    Guia_Cliente = $.trim($("#Guia_Cliente").val());
-    Estado = $.trim($("#Estado").val());
-    Observaciones = $.trim($("#Observaciones").val()); 
+    Distrito = $.trim($("#Distrito").val()); 
+    Latitud = $.trim($("#Latitud").val());    
+    Longitud = $.trim($("#Longitud").val());    
+    Guia_Trans = $.trim($("#Guia_Trans").val());    
+    Guia_Remi = $.trim($("#Guia_Remi").val());    
+    Guia_Cliente = $.trim($("#Guia_Cliente").val());    
+    Estado = $.trim($("#Estado").val());  
+    Observaciones = $.trim($("#Observaciones").val());  
     $.ajax({
         url: "bd/crud.php",
         type: "POST",
         dataType: "json",
-        data: {Fecha_Cliente:Fecha_Cliente, Cod_Cliente:Cod_Cliente, Nombre_Cliente:Nombre_Cliente, 
-            Direccion_Llegada:Direccion_Llegada, Distrito:Distrito, Latitud:Latitud, 
-            Longitud:Longitud, Gui_Trans:Gui_Trans, Guia_Remi:Guia_Remi, Guia_Cliente:Guia_Cliente, 
-            Estado:Estado, Observaciones:Observaciones, 
-            Id:Id, opcion:opcion},
+        data: {Usuario_codigo:Usuario_codigo, 
+            Direccion_Llegada:Direccion_Llegada,
+            Distrito:Distrito,Latitud:Latitud,
+            Longitud:Longitud, Guia_Trans:Guia_Trans,
+            Guia_Remi:Guia_Remi,Guia_Cliente:Guia_Cliente,
+            Estado:Estado,Observaciones:Observaciones,
+            idEntrega:idEntrega, opcion:opcion},
         success: function(data){  
             console.log(data);
-            Id = data[0].Id;            
-            Fecha_Cliente = data[0].Fecha_Cliente;
-            Cod_Cliente = data[0].Cod_Cliente;
-            Nombre_Cliente = data[0].Nombre_Cliente;
+            idEntrega = data[0].idEntrega;            
+            Usuario_codigo = data[0].Usuario_codigo;
             Direccion_Llegada = data[0].Direccion_Llegada;
             Distrito = data[0].Distrito;
             Latitud = data[0].Latitud;
             Longitud = data[0].Longitud;
-            Gui_Trans = data[0].Gui_Trans;
+            Guia_Trans = data[0].Guia_Trans;
             Guia_Remi = data[0].Guia_Remi;
             Guia_Cliente = data[0].Guia_Cliente;
             Estado = data[0].Estado;
             Observaciones = data[0].Observaciones;
             
-            if(opcion == 1){tablaPersonas.row.add([Id, Fecha_Cliente, Cod_Cliente, Nombre_Cliente, 
-                Direccion_Llegada, Distrito, Latitud, Longitud, Gui_Trans, Guia_Remi, 
-                Guia_Cliente, Estado, Observaciones]).draw();}
-            else{tablaPersonas.row(fila).data([Id, Fecha_Cliente, Cod_Cliente, Nombre_Cliente, 
-                Direccion_Llegada, Distrito, Latitud, Longitud, Gui_Trans, Guia_Remi, 
-                Guia_Cliente, Estado, Observaciones]).draw();}            
+            if(opcion == 1){tablaPersonas.row.add([idEntrega,Usuario_codigo,Direccion_Llegada,
+                Distrito,Latitud,Longitud,Guia_Trans,Guia_Remi,Guia_Cliente,
+                Estado,Observaciones]).draw();}
+            else{tablaPersonas.row(fila).data([idEntrega,Usuario_codigo,Direccion_Llegada,
+                Distrito,Latitud,Longitud,Guia_Trans,Guia_Remi,Guia_Cliente,
+                Estado,Observaciones]).draw();}               
         }        
     });
     $("#modalCRUD").modal("hide");    
@@ -194,49 +183,47 @@ $("#formPersonas").submit(function(e){
 
 $("#form").submit(function(e){
     e.preventDefault();    
-    Fecha_Cliente = $.trim($("#Fecha_Cliente2").val());
-    Cod_Cliente = $.trim($("#Cod_Cliente2").val());
-    Nombre_Cliente = $.trim($("#Nombre_Cliente2").val());    
-    Direccion_Llegada = $.trim($("#Direccion_Llegada2").val());
-    Distrito = $.trim($("#Distrito2").val());
-    Latitud = $.trim($("#Latitud2").val()); 
-    Longitud = $.trim($("#Longitud2").val());
-    Gui_Trans = $.trim($("#Gui_Trans2").val());
-    Guia_Remi = $.trim($("#Guia_Remi2").val()); 
-    Guia_Cliente = $.trim($("#Guia_Cliente2").val());
-    Estado = $.trim($("#Estado2").val());
-    Observaciones = $.trim($("#Observaciones2").val()); 
+    Usuario_codigo = $.trim($("#Usuario_codigo").val());
+    Direccion_Llegada = $.trim($("#Direccion_Llegada").val());
+    Distrito = $.trim($("#Distrito").val()); 
+    Latitud = $.trim($("#Latitud").val());    
+    Longitud = $.trim($("#Longitud").val());    
+    Guia_Trans = $.trim($("#Guia_Trans").val());    
+    Guia_Remi = $.trim($("#Guia_Remi").val());    
+    Guia_Cliente = $.trim($("#Guia_Cliente").val());    
+    Estado = $.trim($("#Estado").val());  
+    Observaciones = $.trim($("#Observaciones").val());  
     $.ajax({
         url: "bd/crud.php",
         type: "POST",
         dataType: "json",
-        data: {Fecha_Cliente:Fecha_Cliente, Cod_Cliente:Cod_Cliente, Nombre_Cliente:Nombre_Cliente, 
-            Direccion_Llegada:Direccion_Llegada, Distrito:Distrito, Latitud:Latitud, 
-            Longitud:Longitud, Gui_Trans:Gui_Trans, Guia_Remi:Guia_Remi, Guia_Cliente:Guia_Cliente, 
-            Estado:Estado, Observaciones:Observaciones, 
-            Id:Id, opcion:opcion},
+        data: {Usuario_codigo:Usuario_codigo, 
+            Direccion_Llegada:Direccion_Llegada,
+            Distrito:Distrito,Latitud:Latitud,
+            Longitud:Longitud, Guia_Trans:Guia_Trans,
+            Guia_Remi:Guia_Remi,Guia_Cliente:Guia_Cliente,
+            Estado:Estado,Observaciones:Observaciones,
+            idEntrega:idEntrega, opcion:opcion},
         success: function(data){  
             console.log(data);
-            Id = data[0].Id;            
-            Fecha_Cliente = data[0].Fecha_Cliente;
-            Cod_Cliente = data[0].Cod_Cliente;
-            Nombre_Cliente = data[0].Nombre_Cliente;
+            idEntrega = data[0].idEntrega;            
+            Usuario_codigo = data[0].Usuario_codigo;
             Direccion_Llegada = data[0].Direccion_Llegada;
             Distrito = data[0].Distrito;
             Latitud = data[0].Latitud;
             Longitud = data[0].Longitud;
-            Gui_Trans = data[0].Gui_Trans;
+            Guia_Trans = data[0].Guia_Trans;
             Guia_Remi = data[0].Guia_Remi;
             Guia_Cliente = data[0].Guia_Cliente;
             Estado = data[0].Estado;
             Observaciones = data[0].Observaciones;
             
-            if(opcion == 1){tablaPersonas.row.add([Id, Fecha_Cliente, Cod_Cliente, Nombre_Cliente, 
-                Direccion_Llegada, Distrito, Latitud, Longitud, Gui_Trans, Guia_Remi, 
-                Guia_Cliente, Estado, Observaciones]).draw();}
-            else{tablaPersonas.row(fila).data([Id, Fecha_Cliente, Cod_Cliente, Nombre_Cliente, 
-                Direccion_Llegada, Distrito, Latitud, Longitud, Gui_Trans, Guia_Remi, 
-                Guia_Cliente, Estado, Observaciones]).draw();}            
+            if(opcion == 1){tablaPersonas.row.add([idEntrega,Usuario_codigo,Direccion_Llegada,
+                Distrito,Latitud,Longitud,Guia_Trans,Guia_Remi,Guia_Cliente,
+                Estado,Observaciones]).draw();}
+            else{tablaPersonas.row(fila).data([idEntrega,Usuario_codigo,Direccion_Llegada,
+                Distrito,Latitud,Longitud,Guia_Trans,Guia_Remi,Guia_Cliente,
+                Estado,Observaciones]).draw();}            
         }        
     }); 
     $("#modalVER").modal("hide");   
