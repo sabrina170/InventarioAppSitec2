@@ -79,7 +79,7 @@ switch($opcion){
         $resultado->execute();
         $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
         break;  
-    case 5:
+    case 5://insert usuario
         $consulta="INSERT INTO `usuarios` (`codigo`, `codigonum`, `nombre`, `usuario`, `email`, `password`, `privilegio`, `fecha_registro`)
         VALUES ('$codigo', '$codigonum', '$nombre', '$usuario', '$email', md5('$password'), '$privilegio', current_timestamp()); ";
         $resultado = $conexion->prepare($consulta);
