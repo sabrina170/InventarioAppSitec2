@@ -39,6 +39,19 @@ $("#btnNuevo").click(function(){
    
 
 });    
+
+//Registro de usuarios
+$("#btnUsuario").click(function(){
+    $("#formUsu").trigger("reset");
+    $(".modal-header").css("background-color", "blue");
+    $(".modal-header").css("color", "white");
+    $(".modal-title").text("Nuevo registro de usuario");            
+    $("#modalUSU").modal("show");        
+    codigo=null;
+    opcion = 5; //alta
+   
+
+}); 
     
 var fila; //capturar la fila para editar o borrar el registro
     
@@ -130,7 +143,8 @@ $(document).on("click", ".btnBorrar", function(){
             }
         });
     }   
-    header("location:index.php");
+    header('Location:adindex.php');
+    die();
 });
     
 $("#formPersonas").submit(function(e){
@@ -228,5 +242,43 @@ $("#form").submit(function(e){
     }); 
     $("#modalVER").modal("hide");   
 });    
+
+
+//formUsu
+
+$("#formUsu").submit(function(e){
+    e.preventDefault();    
+    codigonum = $.trim($("#codigonum").val());
+    nombre = $.trim($("#nombre").val());
+    usuario = $.trim($("#usuario").val()); 
+    email = $.trim($("#email").val());    
+    password = $.trim($("#password").val());     
+    privilegio = $.trim($("#privilegio").val());     
+
+    $.ajax({
+        url: "bd/crud.php",
+        type: "POST",
+        dataType: "json",
+        data: {codigonum:codigonum, 
+            nombre:nombre,
+            usuario:usuario,email:email,
+            password:password, privilegio:privilegio,
+            codigo:codigo, opcion:opcion},
+        success: function(data){  
+            console.log(data);
+            codigo = data[0].codigo;            
+            codigonum = data[0].codigonum;
+            nombre = data[0].nombre;
+            usuario = data[0].usuario;
+            email = data[0].email;
+            password = data[0].password;
+            privilegio = data[0].privilegio;
+                   
+        }        
+    }); 
+    $("#modalUSU").modal("hide");   
+});    
+
+//end formUsu
     
 });
