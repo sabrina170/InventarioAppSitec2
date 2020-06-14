@@ -17,6 +17,16 @@ $Guia_Cliente = (isset($_POST['Guia_Cliente'])) ? $_POST['Guia_Cliente'] : '';
 $Estado = (isset($_POST['Estado'])) ? $_POST['Estado'] : '';
 $Observaciones = (isset($_POST['Observaciones'])) ? $_POST['Observaciones'] : '';
 
+//--------------DE USUARIOO--------------------------
+
+$codigo = (isset($_POST['codigo'])) ? $_POST['codigo'] : '';
+$codigonum = (isset($_POST['codigonum'])) ? $_POST['codigonum'] : '';
+$nombre = (isset($_POST['nombre'])) ? $_POST['nombre'] : '';
+$usuario = (isset($_POST['usuario'])) ? $_POST['usuario'] : '';
+$email = (isset($_POST['email'])) ? $_POST['email'] : '';
+$password = (isset($_POST['password'])) ? $_POST['password'] : '';
+$privilegio = (isset($_POST['privilegio'])) ? $_POST['privilegio'] : '';
+
 $opcion = (isset($_POST['opcion'])) ? $_POST['opcion'] : '';
 
 switch($opcion){
@@ -68,7 +78,14 @@ switch($opcion){
         $resultado = $conexion->prepare($consulta);
         $resultado->execute();
         $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
-        break;      
+        break;  
+    case 5:
+        $consulta="INSERT INTO `usuarios` (`codigo`, `codigonum`, `nombre`, `usuario`, `email`, `password`, `privilegio`, `fecha_registro`)
+        VALUES ('$codigo', '$codigonum', '$nombre', '$usuario', '$email', md5('$password'), '$privilegio', current_timestamp()); ";
+        $resultado = $conexion->prepare($consulta);
+        $resultado->execute(); 
+        break;
+
 }
 
 print json_encode($data, JSON_UNESCAPED_UNICODE); //enviar el array final en formato json a JS

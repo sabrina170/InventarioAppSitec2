@@ -51,6 +51,13 @@ $conexion = $objeto->Conectar();
         $resultado2->execute();
         $data2=$resultado2->fetchAll(PDO::FETCH_ASSOC);
 
+        $consulta3="SELECT e.idEntrega, usuario.codigonum, e.Direccion_Llegada,
+        e.Distrito, e.Latitud, e.Longitud, e.Guia_Trans, e.Guia_Remi, e.Guia_Cliente, e.Estado, e.Observaciones FROM 
+         entregas e JOIN usuarios  usuario ON e.Usuario_codigo= usuario.codigo;";
+        $resultado3 = $conexion->prepare($consulta3);
+        $resultado3->execute();
+        $data3=$resultado3->fetchAll(PDO::FETCH_ASSOC);
+
        
 
 
@@ -193,7 +200,7 @@ $conexion = $objeto->Conectar();
             <!--<a class="btn btn-primary" href="index.php" role="button">Mostrar lista total</a>  --> 
        
         <form  style="margin:10px;" action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="post">
-                <button class="btn btn-info"><i class="fa fa-cog" aria-hidden="true"></i></button>
+                <button class="btn btn-info" type="button" id="btnUsuario"  data-toggle="modal"><i class="fa fa-cog" aria-hidden="true"></i>Usuarios</button>
                 <button type="submit" id="export_data" name='export_data' value="Export to excel" class="btn btn-info">Export to excel</button>
                 <button id="btnNuevo" type="button" class="btn btn-success" data-toggle="modal">Nuevo</button> 
         </form>
@@ -218,11 +225,11 @@ $conexion = $objeto->Conectar();
                         </thead>
                         <tbody>
                             <?php                            
-                            foreach($data as $dat) {                                                        
+                            foreach($data3 as $dat) {                                                        
                             ?>
                             <tr>
                                 <td><?php echo $dat['idEntrega'] ?></td>
-                                <td><?php echo $dat['Usuario_codigo'] ?></td>
+                                <td><?php echo $dat['codigonum'] ?></td>
                                 <td><?php echo $dat['Direccion_Llegada'] ?></td>
                                 <td><?php echo $dat['Distrito'] ?></td>
                                 <td><?php echo $dat['Latitud'] ?></td>
@@ -264,7 +271,7 @@ $conexion = $objeto->Conectar();
                                             foreach($data2 as $dat)
                                             {
                                         ?>
-                                            <option value="<?php echo $dat['Codigo'] ?>"><?php echo $dat['Usuario'] ?></option>
+                                            <option value="<?php echo $dat['codigo'] ?>"><?php echo $dat['codigonum'] ?></option>
                                         <?php        
                                             }
                                         ?>
@@ -449,6 +456,55 @@ $conexion = $objeto->Conectar();
         </div>
     </div>
 </div>
+
+<!-- Registro Usuarios-->
+<div class="modal fade" id="modalUSU" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        <form id="formUsu">   
+        <div class="modal-body">
+                <div class="form-group">
+                <label for="nombre" class="col-form-label">Codigo:</label>
+                <input type="number" class="form-control" id="codigonum">
+                </div>
+                <div class="form-group">
+                <label for="pais" class="col-form-label">Nombre:</label>
+                <input type="text" class="form-control" id="nombre">
+                </div>                
+                <div class="form-group">
+                <label for="edad" class="col-form-label">Usuario:</label>
+                <input type="text" class="form-control" id="usuario">
+                </div>   
+                <div class="form-group">
+                <label for="nombre" class="col-form-label">Email:</label>
+                <input type="text" class="form-control" id="email">
+                </div>
+                <div class="form-group">
+                <label for="pais" class="col-form-label">Password:</label>
+                <input type="password" class="form-control" id="password">
+                </div>                
+                <div class="form-group">
+                <label for="edad" class="col-form-label">Privilegio:</label>
+                <select name="privilegio" id="privilegio">
+                <option value="1">Administrador</option>
+                <option value="2">Cliente</option>
+                </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
+                <button type="submit" id="btnGuardar" class="btn btn-dark">Guardar</button>
+            </div>
+        </form>    
+        </div>
+    </div>
+</div>
+
 
       
     <!-- jQuery, Popper.js, Bootstrap JS -->
